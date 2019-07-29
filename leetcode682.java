@@ -23,10 +23,9 @@ public class leetcode682 {
         int sum=0;
         int doubleThing;
         int plus;
-        String st_plus, st_double;
         
         
-        Stack<String> st = new Stack<>();
+        Stack<Integer> st = new Stack<>();
         
         for(int i=0; i<ops.length; i++) {
         	
@@ -35,25 +34,21 @@ public class leetcode682 {
         			st.pop();
     			// 들어가는 요소가 "D" 라면 스택의 맨 윗 요소를 두배 해서 push()
         		}else if(ops[i].equals("D")) {
-        			doubleThing = Integer.parseInt(st.peek());
-        			doubleThing *=2;
-        			st_double = Integer.toString(doubleThing);
-        			st.push(st_double);
+        			doubleThing = st.peek();
+        			st.push(doubleThing);
     			//들어가는 요소가 "+" 라면 스택의 맨 윗 요소와 그 아래 요소를 더해서 push()
         		}else if(ops[i].equals("+")) {
-        			plus = Integer.parseInt(st.peek()) + Integer.parseInt(st.elementAt(st.size()-2));
-        			
-        			st_plus = Integer.toString(plus);
-        			st.push(st_plus);
+        			plus = st.peek() + st.elementAt(st.size()-2);
+        			st.push(plus);
     			//나머지 요소는 Integer로 간주하고 그냥 push()
         		}else {
-        			st.push(ops[i]);
+        			st.push(Integer.parseInt(ops[i]));
         		}
         }
         
         //스택에 있는 모든 값 꺼내서 더하기 
         while(!st.isEmpty()) {
-        	sum += Integer.parseInt(st.pop());
+        	sum += st.pop();
         }
         
         return sum;
